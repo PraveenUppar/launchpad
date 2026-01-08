@@ -1,4 +1,4 @@
-import { Request, Response } from 'express';
+import { Request, Response, NextFunction } from 'express';
 
 import {
   createTodoService,
@@ -6,16 +6,20 @@ import {
   deleteTodoService,
   patchTodoService,
 } from '../services/todo.service';
+import AppError from '../utils/AppError.js';
 
-const postTodoController = async (req: Request, res: Response) => {
+const postTodoController = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
   const userId = req.userId;
   try {
     const { title, completed } = req.body;
-    if (!title) {
-      return res
-        .status(400)
-        .json({ success: false, message: 'Title is required' });
-    }
+    // zod validation
+    // if (!title) {
+    //   res.status(400).json({ success: false, message: 'Title is required' });
+    // }
     const newTodo = await createTodoService(userId, { title, completed });
     return res.status(201).json({
       success: true,
@@ -23,10 +27,14 @@ const postTodoController = async (req: Request, res: Response) => {
       data: newTodo,
     });
   } catch (error) {
-    return res.status(500).json({ message: 'Failed to create todo' });
+    return next(new AppError('Failed to create todo', 500));
   }
 };
-const getTodoController = async (req: Request, res: Response) => {
+const getTodoController = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
   try {
     const todos = await getTodoService();
     return res.status(200).json({
@@ -35,10 +43,14 @@ const getTodoController = async (req: Request, res: Response) => {
       data: todos,
     });
   } catch (error) {
-    return res.status(500).json({ message: 'Failed to get todos' });
+    return next(new AppError('Failed to create todo', 500));
   }
 };
-const deleteTodoController = async (req: Request, res: Response) => {
+const deleteTodoController = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
   try {
     const { id } = req.params;
     if (!id) {
@@ -52,10 +64,14 @@ const deleteTodoController = async (req: Request, res: Response) => {
       message: 'Todo deleted successfully',
     });
   } catch (error) {
-    return res.status(500).json({ message: 'Failed to delete todos' });
+    return next(new AppError('Failed to delete todos', 500));
   }
 };
-const patchTodoController = async (req: Request, res: Response) => {
+const patchTodoController = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
   try {
     const { id } = req.params;
     if (!id) {
@@ -71,7 +87,7 @@ const patchTodoController = async (req: Request, res: Response) => {
       data: updateTodo,
     });
   } catch (error) {
-    res.status(500).json({ message: 'Failed to update todo' });
+    return next(new AppError('Failed to update todo', 500));
   }
 };
 

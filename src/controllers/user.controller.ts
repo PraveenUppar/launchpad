@@ -25,7 +25,7 @@ const registerUserController = async (
       user: { email: newUser.email },
     });
   } catch (error) {
-    return next(new AppError('Login Error', 500));
+    return next(new AppError('Failed to register user', 500));
   }
 };
 
@@ -57,7 +57,7 @@ const loginUserController = async (
       user: { email: user.email },
     });
   } catch (error) {
-    return next(new AppError('Login Server Error', 500));
+    return next(new AppError('Failed to login user', 500));
   }
 };
 

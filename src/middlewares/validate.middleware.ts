@@ -5,14 +5,11 @@ const validate =
   (schema: ZodObject) =>
   async (req: Request, res: Response, next: NextFunction) => {
     try {
-      // Check if req.body/query/params matches the schema rules
       await schema.parseAsync({
         body: req.body,
         query: req.query,
         params: req.params,
       });
-
-      // If successful, move to the Controller
       next();
     } catch (error) {
       // If validation fails, format the error nicely
