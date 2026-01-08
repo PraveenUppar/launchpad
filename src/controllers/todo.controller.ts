@@ -36,12 +36,13 @@ const getTodoController = async (
   next: NextFunction,
 ) => {
   try {
-    const todos = await getTodoService();
+    const page = parseInt(req.query.page as string) || 1;
+    const limit = parseInt(req.query.limit as string) || 5;
+    const todos = await getTodoService(page, limit);
     return res.status(200).json({
       success: true,
       message: 'Todos retrieved successfully',
       data: todos,
-      // meta: todos.meta,
     });
   } catch (error) {
     return next(new AppError('Failed to create todo', 500));

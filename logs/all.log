@@ -138,3 +138,8 @@ Unique constraint failed on the fields: (`email`)
 2026-01-08 23:07:03 [32minfo[39m: [32m{"method":"GET","url":"/api/v1/todo","status":"200","responseTime":"217.789"}[39m
 2026-01-08 23:07:49 [32minfo[39m: [32m{"method":"GET","url":"/api/v1/todo","status":"200","responseTime":"283.960"}[39m
 2026-01-08 23:08:23 [32minfo[39m: [32m{"method":"GET","url":"/api/v1/todo","status":"200","responseTime":"197.852"}[39m
+2026-01-08 23:22:46 [32minfo[39m: [32m{"method":"GET","url":"/api/v1/todo","status":"200","responseTime":"452.251"}[39m
+2026-01-08 23:22:55 [32minfo[39m: [32m{"method":"GET","url":"/api/v1/todo","status":"200","responseTime":"73.386"}[39m
+2026-01-08 23:23:08 [32minfo[39m: [32m{"method":"GET","url":"/api/v1/todo","status":"200","responseTime":"83.570"}[39m
+2026-01-08 23:23:10 [32minfo[39m: [32m{"method":"GET","url":"/api/v1/todo","status":"200","responseTime":"26.048"}[39m
+2026-01-08 23:23:11 [32minfo[39m: [32m{"method":"GET","url":"/api/v1/todo","status":"200","responseTime":"44.408"}[39m
