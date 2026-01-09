@@ -26,9 +26,9 @@ jobs:
       - name: Build Docker image
         run: |
           docker build \
-          -t ghcr.io/${{ github.actor }}/todo-backend:latest \
+          -t ghcr.io/${{ github.actor.toLowerCase }}/todo-backend:latest \
             .
 
       - name: Push Docker image
         run: |
-          docker push ghcr.io/${{ github.actor }}/todo-backend:latest
+          docker push ghcr.io/${{ github.actor.toLowerCase }}/todo-backend:latest
