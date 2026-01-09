@@ -45,3 +45,17 @@ const logger = winston.createLogger({
 });
 
 export default logger;
+
+// You write logs to files:
+// new winston.transports.File({ filename: 'logs/error.log' })
+
+// Inside Docker:
+// Containers are ephemeral
+// Files disappear
+// Kubernetes ignores them
+
+// Why:
+
+// Docker captures stdout
+// Kubernetes reads container logs
+// This is how production works

@@ -11,6 +11,7 @@ import AppError from './utils/AppError.js';
 import userRoute from './routes/user.route.js';
 import todoRoute from './routes/todo.route.js';
 import healthRouter from './routes/health.check.js';
+import { metricsMiddleware } from './middlewares/metrics.middleware.js';
 
 dotenv.config();
 const app = express();
@@ -21,6 +22,8 @@ app.use(helmet());
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+app.use(metricsMiddleware);
 
 const morganFormat = ':method :url :status :response-time ms';
 

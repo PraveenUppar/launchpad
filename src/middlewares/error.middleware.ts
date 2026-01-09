@@ -12,9 +12,13 @@ const globalErrorHandler = (
   err.status = err.status || 'error';
 
   // log the method, URL, status code, and the error message
-  logger.error(
-    `${req.method} ${req.originalUrl} ${err.statusCode} - ${err.message}`,
-  );
+  logger.error('request_failed', {
+    method: req.method,
+    path: req.originalUrl,
+    statusCode: err.statusCode,
+    message: err.message,
+    stack: process.env.NODE_ENV === 'development' ? err.stack : undefined,
+  });
 
   // Handle Specific Prisma Errors (Database issues)
   if (err instanceof Prisma.PrismaClientKnownRequestError) {

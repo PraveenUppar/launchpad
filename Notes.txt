@@ -15,15 +15,15 @@ Phase 14 Health check points                        -- DONE
 Phase 15 Monitoring                                 -- 
 Phase 16 Rate limiting                              -- DONE
 
-
+---------------------------------------------------------------------------
 Request → [Logger] → [Zod Validation] → Controller → Service → Database (If anything fails) ↘ [Global Error Handler] → Response
-
+---------------------------------------------------------------------------
 Tools for Measurement
 • Profiling: Measures where an application spends its time during execution (e.g., CPU-bound tasks)
 • Flame Graphs: A visualization tool for profiling data, showing the call stack and time spent in functions
 • Profilers are excellent for CPU-bound tasks but struggle with IO-bound tasks (database queries, external API calls)
 • Distributed Tracing: Tracks a request as it flows through the entire system, recording time spent at every step (DB, service layer, external calls)
-
+---------------------------------------------------------------------------
 5 layers: The Big Picture
 
 TypeScript code
@@ -35,7 +35,7 @@ Prisma Adapter (pg / Supabase pooler)
 Postgres (Supabase)
    ↓
 Docker (packaging + runtime)
-
+---------------------------------------------------------------------------
 
 Prisma lifecycle
 
@@ -46,15 +46,55 @@ prisma generate   ← build time
 TypeScript compile
     ↓
 Runtime Prisma Client
-
+---------------------------------------------------------------------------
 Prisma generates a typed client from the schema.
 That client must exist before TypeScript compiles.
 Docker builds the app without envs, so Prisma needs a dummy DB URL at build time.
 Real credentials are injected only when the container runs.
-
+---------------------------------------------------------------------------
 Prisma:
   schema → generate → types → runtime queries
 
 TypeScript:
   source → compile → dist
+---------------------------------------------------------------------------
+Monitoring answers three questions:
 
+Is the service alive? → health check 
+Is it slow or failing? → request metrics
+Why did it fail? → structured logs
+
+---------------------------------------------------------------------------
+You now have:
+
+✅ Health checks (availability)
+✅ Request metrics (performance)
+✅ Error tracking (reliability)
+✅ Structured logs (debugging)
+
+This is observability, not logging.
+
+What NOT to do yet
+
+❌ Prometheus
+❌ Grafana
+❌ OpenTelemetry
+❌ Tracing systems
+
+Those come after infra exists.
+---------------------------------------------------------------------------
+Availability
+/health endpoint
+Docker health check
+
+Performance
+
+Request latency
+Slow endpoints
+Traffic patterns
+
+Reliability
+
+Error frequency
+Error types
+Failing routes
