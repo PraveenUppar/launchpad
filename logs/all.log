@@ -184,3 +184,10 @@ Unique constraint failed on the fields: (`email`)
 2026-01-09 20:39:24 [32minfo[39m: [32m{"method":"GET","url":"/health/database","status":"200","responseTime":"206.426"}[39m
 2026-01-09 20:43:26 [32minfo[39m: [32m{"method":"GET","url":"/health/database","status":"200","responseTime":"271.020"}[39m
 2026-01-09 20:43:41 [32minfo[39m: [32m{"method":"GET","url":"/health/database","status":"200","responseTime":"181.568"}[39m
+2026-01-09 20:58:45 [32minfo[39m: [32m{"method":"GET","url":"/health/redis","status":"200","responseTime":"98.764"}[39m
+2026-01-09 20:58:49 [32minfo[39m: [32m{"method":"GET","url":"/health/database","status":"200","responseTime":"643.330"}[39m
+2026-01-09 20:58:53 [32minfo[39m: [32m{"method":"POST","url":"/api/v1/auth/login","status":"200","responseTime":"112.189"}[39m
+2026-01-09 20:59:13 [32minfo[39m: [32m{"method":"POST","url":"/api/v1/auth/login","status":"200","responseTime":"289.200"}[39m
+2026-01-09 21:39:26 [32minfo[39m: [32m{"method":"GET","url":"/health/database","status":"200","responseTime":"214.199"}[39m
+2026-01-09 21:39:30 [32minfo[39m: [32m{"method":"GET","url":"/health/redis","status":"200","responseTime":"92.828"}[39m
+2026-01-09 21:39:36 [32minfo[39m: [32m{"method":"POST","url":"/api/v1/auth/login","status":"200","responseTime":"116.797"}[39m

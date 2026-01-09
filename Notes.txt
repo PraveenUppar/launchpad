@@ -7,7 +7,7 @@ Phase 6: Scaling & Deployment                       --
 Phase 7: Pagination                                 -- DONE
 Phase 8: Validation                                 -- DONE
 Phase 9: Error Handling                             -- DONE
-Phase 10: Docker                                    -- 
+Phase 10: Docker                                    -- DONE
 Phase 11: Kubernetes                                -- 
 Phase 12: CI CD                                     -- 
 Phase 13 Open API using sawgger                     -- DONE
@@ -23,3 +23,32 @@ Tools for Measurement
 • Flame Graphs: A visualization tool for profiling data, showing the call stack and time spent in functions
 • Profilers are excellent for CPU-bound tasks but struggle with IO-bound tasks (database queries, external API calls)
 • Distributed Tracing: Tracks a request as it flows through the entire system, recording time spent at every step (DB, service layer, external calls)
+
+5 layers: The Big Picture
+
+TypeScript code
+   ↓
+Prisma Client (generated code)
+   ↓
+Prisma Adapter (pg / Supabase pooler)
+   ↓
+Postgres (Supabase)
+   ↓
+Docker (packaging + runtime)
+
+
+Prisma lifecycle
+
+schema.prisma
+    ↓
+prisma generate   ← build time
+    ↓
+TypeScript compile
+    ↓
+Runtime Prisma Client
+
+Prisma generates a typed client from the schema.
+That client must exist before TypeScript compiles.
+Docker builds the app without envs, so Prisma needs a dummy DB URL at build time.
+Real credentials are injected only when the container runs.
+
