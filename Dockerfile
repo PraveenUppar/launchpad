@@ -41,5 +41,5 @@ COPY --from=build /app/prisma ./prisma
 EXPOSE 3000
 CMD ["node", "dist/server.js"]
 
-HEALTHCHECK --interval=50s --timeout=5s --retries=3 \
-  CMD wget -qO- http://localhost:3000/health/database || exit 1
+# HEALTHCHECK --interval=100s --timeout=10s --retries=5 \
+#   CMD wget -qO- http://localhost:3000/health/database || exit 1

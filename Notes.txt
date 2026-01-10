@@ -3,13 +3,13 @@ Phase 2: API Development                            -- DONE
 Phase 3: Logging                                    -- DONE
 Phase 4: Testing                                    -- 
 Phase 5: Caching                                    -- DONE
-Phase 6: Scaling & Deployment                       -- 
+Phase 6: Scaling & Deployment                       -- DONE
 Phase 7: Pagination                                 -- DONE
 Phase 8: Validation                                 -- DONE
 Phase 9: Error Handling                             -- DONE
 Phase 10: Docker                                    -- DONE
-Phase 11: Kubernetes                                -- 
-Phase 12: CI CD                                     -- 
+Phase 11: Kubernetes                                -- DONE
+Phase 12: CI CD                                     -- DONE
 Phase 13 Open API using sawgger                     -- DONE
 Phase 14 Health check points                        -- DONE
 Phase 15 Monitoring                                 -- 
@@ -108,9 +108,151 @@ What problems CI will now catch early
 ✔ TypeScript errors
 ✔ Missing files in image
 ---------------------------------------------------------------------------
+What Kubernetes does now
 
+If probe fails:
+
+readiness → pod removed from traffic
+liveness → pod restarted
+
+You now have self-healing.
+---------------------------------------------------------------------------
+✔ Dockerized backend
+✔ CI validation
+✔ Image publishing
+✔ Kubernetes Deployment
+✔ Secrets
+✔ Health probes
+✔ Service
+✔ Self-healing system
+✅ Multi-replica backend
+✅ Resource protection
+✅ Health-based routing
+✅ Zero-downtime rolling updates
+✅ Instant rollback capability
+Ingress routing
+---------------------------------------------------------------------------
+A rolling update:
+
+“How do I replace running pods with new ones without stopping traffic?”
+
+Kubernetes does not:
+
+stop all old pods
+then start new ones
+
+Instead, it:
+
+brings up new pods
+waits until they’re ready
+shifts traffic
+then removes old pods
+
+This only works because:
+
+you have readiness probes
+your app is stateless
+traffic goes through a Service
+---------------------------------------------------------------------------
+How a real rolling update happens
+
+When you deploy a new image version:
+Kubernetes creates 1 new pod
+Waits for readiness probe to pass
+Routes traffic to it
+Deletes 1 old pod
+Repeats until done
+---------------------------------------------------------------------------
+In production, traffic looks like:
+
+Internet
+   ↓
+Load Balancer / Reverse Proxy
+   ↓
+Ingress Controller
+   ↓
+Kubernetes Service
+   ↓
+Pods
+
+kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/main/deploy/static/provider/kind/deploy.yaml
+kubectl get pods -n ingress-nginx
+kubectl get svc -n ingress-nginx
+
+NAME                                 TYPE           CLUSTER-IP     EXTERNAL-IP   PORT(S)                      AGE
+ingress-nginx-controller             LoadBalancer   10.96.74.233   <pending>     80:32419/TCP,443:30816/TCP   86s
+ingress-nginx-controller-admission   ClusterIP      10.96.248.83   <none>        443/TCP                      86s
+
+kubectl get ingress -n todo-backend
+kubectl logs -n ingress-nginx deploy/ingress-nginx-controller
+
+“Ingress is the entry point to the cluster.
+It routes external traffic to services based on host and path.
+Services abstract pod lifecycles, so rolling updates don’t cause downtime.”
+
+Ingress is just: A smart reverse proxy running inside the cluster
+
+In your case:
+
+That proxy is NGINX
+It runs as a Pod
+It listens on ports 80 / 443
+It reads Ingress rules
+It forwards traffic to Services
+
+Traffic flow in Development
+Browser
+  ↓
+/etc/hosts (todo.local → 127.0.0.1)
+  ↓
+NodePort (32419)
+  ↓
+Ingress NGINX Pod
+  ↓
+Ingress rules (Host + Path)
+  ↓
+Service
+  ↓
+Pod
+
+Traffic flow in production
+Internet
+  ↓
+DNS (api.pavii.dev → LB IP)
+  ↓
+Cloud LoadBalancer
+  ↓
+Ingress Controller
+  ↓
+Service
+  ↓
+Pods
+---------------------------------------------------------------------------
+When someone asks:
+
+“How does traffic reach your service in Kubernetes?”
+
+Your answer:
+
+“DNS resolves the domain to the load balancer.
+The load balancer forwards traffic to an ingress controller.
+Ingress routes based on host/path to a service, which load-balances across pods.”
 ---------------------------------------------------------------------------
 
 ---------------------------------------------------------------------------
 
 ---------------------------------------------------------------------------
+
+🔹 Option A — HTTPS (TLS with cert-manager)
+
+Real certificates, HTTPS, production realism
+
+🔹 Option B — Autoscaling (HPA)
+
+Traffic-based scaling (very impressive)
+
+🔹 Option C — Secrets & ConfigMaps
+
+Production-safe config management
+
+👉 Tell me which one you want next

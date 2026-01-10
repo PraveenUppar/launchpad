@@ -16,6 +16,8 @@ import { metricsMiddleware } from './middlewares/metrics.middleware.js';
 dotenv.config();
 const app = express();
 
+app.use('/health', healthRouter);
+
 app.use(rateLimitMiddleware);
 
 app.use(helmet());
@@ -43,7 +45,6 @@ app.use(
   }),
 );
 
-app.use('/health', healthRouter);
 app.use('/api/v1/auth', userRoute);
 app.use('/api/v1', todoRoute);
 app.all('/*splat', (req: Request, res: Response, next: NextFunction) => {
