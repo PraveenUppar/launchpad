@@ -44,20 +44,15 @@ const baseSchema = {
     .transform((val) => parseInt(val, 10)),
 };
 
-// Redis - required in production/development, optional in test
-const redisSchema = isTest
-  ? {
-      UPSTASH_REDIS_URL: z.string().url('UPSTASH_REDIS_URL must be a valid URL').optional(),
-      UPSTASH_REDIS_TOKEN: z.string().min(1, 'UPSTASH_REDIS_TOKEN is required').optional(),
-    }
-  : {
-      UPSTASH_REDIS_URL: z.string().url('UPSTASH_REDIS_URL must be a valid URL'),
-      UPSTASH_REDIS_TOKEN: z.string().min(1, 'UPSTASH_REDIS_TOKEN is required'),
-    };
-
+// Redis - always include in schema, but validate conditionally
 const envSchema = z.object({
   ...baseSchema,
-  ...redisSchema,
+  UPSTASH_REDIS_URL: isTest
+    ? z.string().url('UPSTASH_REDIS_URL must be a valid URL').optional()
+    : z.string().url('UPSTASH_REDIS_URL must be a valid URL'),
+  UPSTASH_REDIS_TOKEN: isTest
+    ? z.string().min(1, 'UPSTASH_REDIS_TOKEN is required').optional()
+    : z.string().min(1, 'UPSTASH_REDIS_TOKEN is required'),
 });
 
 type EnvConfig = z.infer<typeof envSchema>;
@@ -97,8 +92,8 @@ export default {
   },
 
   redis: {
-    url: config.UPSTASH_REDIS_URL || 'http://localhost:6379',
-    token: config.UPSTASH_REDIS_TOKEN || 'test-token',
+    url: (config.UPSTASH_REDIS_URL ?? 'http://localhost:6379') as string,
+    token: (config.UPSTASH_REDIS_TOKEN ?? 'test-token') as string,
   },
 
   otel: {
