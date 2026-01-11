@@ -3,7 +3,10 @@ import { z } from 'zod';
 
 dotenv.config();
 
-const envSchema = z.object({
+const isTest = process.env.NODE_ENV === 'test';
+
+// Base schema with required fields
+const baseSchema = {
   NODE_ENV: z
     .enum(['development', 'production', 'test'])
     .default('development'),
@@ -19,10 +22,6 @@ const envSchema = z.object({
   // JWT
   JWT_SECRET: z.string().min(32, 'JWT_SECRET must be at least 32 characters'),
   JWT_EXPIRES_IN: z.string().default('1h'),
-
-  // Redis
-  UPSTASH_REDIS_URL: z.string().url('UPSTASH_REDIS_URL must be a valid URL'),
-  UPSTASH_REDIS_TOKEN: z.string().min(1, 'UPSTASH_REDIS_TOKEN is required'),
 
   // OpenTelemetry (optional)
   OTEL_EXPORTER_OTLP_ENDPOINT: z.string().url().optional(),
@@ -43,6 +42,22 @@ const envSchema = z.object({
     .string()
     .default('30')
     .transform((val) => parseInt(val, 10)),
+};
+
+// Redis - required in production/development, optional in test
+const redisSchema = isTest
+  ? {
+      UPSTASH_REDIS_URL: z.string().url('UPSTASH_REDIS_URL must be a valid URL').optional(),
+      UPSTASH_REDIS_TOKEN: z.string().min(1, 'UPSTASH_REDIS_TOKEN is required').optional(),
+    }
+  : {
+      UPSTASH_REDIS_URL: z.string().url('UPSTASH_REDIS_URL must be a valid URL'),
+      UPSTASH_REDIS_TOKEN: z.string().min(1, 'UPSTASH_REDIS_TOKEN is required'),
+    };
+
+const envSchema = z.object({
+  ...baseSchema,
+  ...redisSchema,
 });
 
 type EnvConfig = z.infer<typeof envSchema>;
@@ -58,7 +73,8 @@ try {
       const path = issue.path.join('.');
       console.error(`  - ${path}: ${issue.message}`);
     });
-    process.exit(1);
+    // Throw error instead of process.exit to allow Jest to handle it
+    throw new Error('Environment variable validation failed');
   }
   throw error;
 }
@@ -81,8 +97,8 @@ export default {
   },
 
   redis: {
-    url: config.UPSTASH_REDIS_URL,
-    token: config.UPSTASH_REDIS_TOKEN,
+    url: config.UPSTASH_REDIS_URL || 'http://localhost:6379',
+    token: config.UPSTASH_REDIS_TOKEN || 'test-token',
   },
 
   otel: {
