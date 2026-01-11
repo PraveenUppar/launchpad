@@ -4,6 +4,7 @@ import helmet from 'helmet';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import morgan from 'morgan';
+
 import { rateLimitMiddleware } from './middlewares/ratelimit.middleware';
 import logger from './utils/logger';
 import globalErrorHandler from './middlewares/error.middleware';

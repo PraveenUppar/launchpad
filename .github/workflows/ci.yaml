@@ -55,5 +55,11 @@ jobs:
       - name: TypeScript build
         run: npm run build
 
+      - name: Lint
+        run: npm run lint
+
+      - name: Format check
+        run: npm run format
+
       - name: Docker build (validation only)
         run: docker build .
