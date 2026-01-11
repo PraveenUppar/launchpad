@@ -49,9 +49,6 @@ jobs:
       - name: Run migrations
         run: npx prisma migrate deploy
 
-      - name: Run unit + integration tests
-        run: npm test
-
       - name: TypeScript build
         run: npm run build
 
@@ -60,6 +57,9 @@ jobs:
 
       - name: Format check
         run: npm run format
+
+      - name: Run unit + integration tests
+        run: npm test
 
       - name: Docker build (validation only)
         run: docker build -f docker/Dockerfile .
