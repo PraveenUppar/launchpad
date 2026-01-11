@@ -27,6 +27,11 @@ describe('Todo API - Integration Tests', () => {
     process.env.TEST_USER_ID = testUserId;
   });
 
+  afterEach(() => {
+    // Clean up env var
+    delete process.env.TEST_USER_ID;
+  });
+
   afterAll(async () => {
     await prisma.$disconnect();
   });

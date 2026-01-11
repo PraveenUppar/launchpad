@@ -91,7 +91,10 @@ export default {
   },
 
   test: {
-    userId: config.TEST_USER_ID,
+    get userId() {
+      // In test mode, read from process.env dynamically to allow runtime changes
+      return process.env.TEST_USER_ID || config.TEST_USER_ID;
+    },
   },
 
   cors: {
