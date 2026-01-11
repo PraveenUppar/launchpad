@@ -3,9 +3,9 @@ import {
   createUserService,
   findUserService,
   verifyUserService,
-} from '../services/user.service.js';
-import { generateToken } from '../utils/jwt.js';
-import AppError from '../utils/AppError.js';
+} from '../services/user.service';
+import { generateToken } from '../utils/jwt';
+import AppError from '../utils/AppError';
 
 const registerUserController = async (
   req: Request,

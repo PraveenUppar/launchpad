@@ -6,7 +6,7 @@ import {
   deleteTodoService,
   patchTodoService,
 } from '../services/todo.service';
-import AppError from '../utils/AppError.js';
+import AppError from '../utils/AppError';
 
 const postTodoController = async (
   req: Request,

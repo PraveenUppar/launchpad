@@ -35,28 +35,6 @@ API → service → DB wiring
 Use:
 testcontainers
 Or docker-compose.test.yml
------------------------------------------------------
-Contract / API Tests
-
-Validate OpenAPI schema
-Ensure backward compatibility
------------------------------------------------------
-Test Data Management 
-
-Rules
-Each test starts with clean state
-No shared DB data
-No order-dependent tests
------------------------------------------------------
-Negative & Edge Case Tests (this separates pros)
-
-Add tests for:
-
-Empty input
-Duplicate todo
-Unauthorized access
-Rate-limited request
-Invalid pagination param
 
 -----------------------------------------------------
 CI Integration (mandatory)

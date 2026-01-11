@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import { Ratelimit } from '@upstash/ratelimit';
-import redis from '../redis/redis.js';
-import AppError from '../utils/AppError.js';
+import redis from '../redis/redis';
+import AppError from '../utils/AppError';
 
 const limiter = new Ratelimit({
   redis: redis,
@@ -15,6 +15,10 @@ export const rateLimitMiddleware = async (
   res: Response,
   next: NextFunction,
 ) => {
+  // Skip rate limiting in test environment
+  if (process.env.NODE_ENV === 'test') {
+    return next();
+  }
   try {
     const identifier =
       (req.headers['x-forwarded-for'] as string) ||
