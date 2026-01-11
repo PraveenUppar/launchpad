@@ -41,4 +41,11 @@ describe('Todo API - Integration Tests', () => {
     expect(response.body.success).toBe(true);
     expect(response.body.data.title).toBe('Integration Test Todo');
   });
+  it('GET /api/v1/todo - returns todos', async () => {
+    const res = await request(app).get('/api/v1/todo');
+
+    expect(res.status).toBe(200);
+    expect(res.body.success).toBe(true);
+    expect(Array.isArray(res.body.data.data)).toBe(true);
+  });
 });
