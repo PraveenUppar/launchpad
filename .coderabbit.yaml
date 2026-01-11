@@ -1,0 +1,22 @@
+language: typescript
+
+reviews:
+  profile: thorough
+  request_changes_threshold: high
+
+  auto_review:
+    enabled: true
+
+  rules:
+    - focus:
+        - security
+        - performance
+        - error-handling
+        - api-design
+        - scalability
+
+    - ignore:
+        - dist/**
+        - coverage/**
+        - node_modules/**
+        - prisma/migrations/**

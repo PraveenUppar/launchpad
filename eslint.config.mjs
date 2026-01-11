@@ -18,7 +18,7 @@ export default tseslint.config(
       import: importPlugin,
     },
     rules: {
-      'no-console': 'warn',
+      // 'no-console': 'warn',
       '@typescript-eslint/no-unused-vars': 'off',
       'unused-imports/no-unused-imports': 'error',
     },

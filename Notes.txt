@@ -12,18 +12,20 @@ Phase 11: Kubernetes                                -- DONE
 Phase 12: CI CD                                     -- DONE
 Phase 13 Open API using sawgger                     -- DONE
 Phase 14 Health check points                        -- DONE
-Phase 15 Monitoring                                 -- 
+Phase 15 Monitoring                                 -- DONE
 Phase 16 Rate limiting                              -- DONE
-Phase 17 Observability                              -- 
+Phase 17 Observability                              -- DONE
 Phase 18 Authentication                             -- DONE
 Phase 19 Queue                                      -- 
 Phase 20 Security                                   -- DONE
-Phase 21 Code Quality                               -- 
-Phase 22 Code Rabit                                 -- 
-Phase 23 qodo-code-review                           -- 
+Phase 21 Code Quality                               -- DONE
+Phase 22 Code Rabit                                 -- DONE
+Phase 23 qodo-code-review                           -- DONE
 Phase 24 Linting and Formatig                       -- DONE
-Phase 25 Open Telemetry                             --  
-Phase 26 Grafana and Prometus                       -- 
+Phase 25 Open Telemetry                             -- DONE
+Phase 26 Grafana and Prometus                       -- DONE
+
+  
 ---------------------------------------------------------------------------
 Request → [Logger] → [Zod Validation] → Controller → Service → Database (If anything fails) ↘ [Global Error Handler] → Response
 ---------------------------------------------------------------------------

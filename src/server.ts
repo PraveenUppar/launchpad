@@ -1,10 +1,14 @@
 import app from './app.js';
+import { startTracing } from './observability/tracing';
 
 const PORT = 3000;
 
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
-});
+(async () => {
+  await startTracing();
+  app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
+  });
+})();
 
 process.on('SIGTERM', () => {
   console.log('SIGTERM received. Shutting down gracefully.');

@@ -12,8 +12,8 @@ if (process.env.NODE_ENV === 'test') {
   };
 } else {
   redis = new Redis({
-    url: process.env.UPSTASH_REDIS_REST_URL!,
-    token: process.env.UPSTASH_REDIS_REST_TOKEN!,
+    url: 'https://settled-ghost-32735.upstash.io',
+    token: 'AX_fAAIncDJhYWI2YTM3NTBkOTk0YzcxODRkNTFmNmFjNjE2MDI2OHAyMzI3MzU',
   });
 }
 

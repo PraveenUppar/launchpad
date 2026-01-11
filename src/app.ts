@@ -4,7 +4,7 @@ import helmet from 'helmet';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import morgan from 'morgan';
-
+import { prometheusMiddleware } from './observability/metrics';
 import { rateLimitMiddleware } from './middlewares/ratelimit.middleware';
 import logger from './utils/logger';
 import globalErrorHandler from './middlewares/error.middleware';
@@ -25,6 +25,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.use(metricsMiddleware);
+app.use(prometheusMiddleware);
 
 const morganFormat = ':method :url :status :response-time ms';
 
