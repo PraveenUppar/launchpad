@@ -22,7 +22,9 @@ const registerUserController = async (
     res.status(201).json({
       success: true,
       message: 'User registered successfully',
-      user: { email: newUser.email },
+      data: {
+        email: newUser.email,
+      },
     });
   } catch (error) {
     return next(new AppError('Failed to register user', 500));
