@@ -1,22 +1,6 @@
 # Production-Ready Todo Backend API
 
-A production-grade RESTful API for managing todos, built with modern backend engineering principles. This project demonstrates industry-standard practices for building scalable, observable, and maintainable backend services.
-
-## Table of Contents
-
-- [Overview](#overview)
-- [Features](#features)
-- [Tech Stack](#tech-stack)
-- [Architecture](#architecture)
-- [API Documentation](#api-documentation)
-- [Getting Started](#getting-started)
-- [Development](#development)
-- [Testing](#testing)
-- [Deployment](#deployment)
-- [Observability](#observability)
-- [Security](#security)
-- [Contributing](#contributing)
-- [Project Structure](#project-structure)
+A production grade RESTful API for managing todos, built with modern backend engineering principles. This project demonstrates industry-standard practices for building scalable, observable, and maintainable backend services.
 
 ## Overview
 
@@ -33,104 +17,6 @@ This Todo Backend API is designed as a reference implementation showcasing produ
 - **Orchestration** with Kubernetes
 - **CI/CD** pipelines for automated testing and deployment
 - **Health Checks** for reliability monitoring
-
-## Features
-
-### Core Functionality
-
-- ✅ User registration and authentication
-- ✅ JWT-based authentication
-- ✅ CRUD operations for todos
-- ✅ User-specific todo isolation
-- ✅ Pagination support
-- ✅ Input validation with Zod
-- ✅ Comprehensive error handling
-
-### Infrastructure & Operations
-
-- ✅ Docker containerization
-- ✅ Kubernetes deployment with HPA
-- ✅ CI/CD with GitHub Actions
-- ✅ Health check endpoints
-- ✅ Graceful shutdown handling
-- ✅ Database migrations with Prisma
-
-### Observability & Monitoring
-
-- ✅ Structured logging with Winston
-- ✅ Prometheus metrics collection
-- ✅ OpenTelemetry distributed tracing
-- ✅ Grafana dashboards
-- ✅ Request/response logging
-
-### Security
-
-- ✅ Helmet.js for security headers
-- ✅ CORS configuration
-- ✅ Rate limiting (per IP and per user)
-- ✅ Password hashing with bcrypt
-- ✅ Input validation and sanitization
-
-### Code Quality
-
-- ✅ TypeScript for type safety
-- ✅ ESLint for code linting
-- ✅ Prettier for code formatting
-- ✅ Husky for git hooks
-- ✅ Automated code review (CodeRabbit)
-
-## Tech Stack
-
-### Core
-
-- **Runtime**: Node.js 20
-- **Framework**: Express.js 5.x
-- **Language**: TypeScript 5.x
-- **Database**: PostgreSQL 15
-- **ORM**: Prisma 7.x
-
-### Caching & Rate Limiting
-
-- **Cache**: Upstash Redis
-- **Rate Limiting**: @upstash/ratelimit
-
-### Authentication
-
-- **JWT**: jsonwebtoken
-- **Password Hashing**: bcrypt
-
-### Validation
-
-- **Schema Validation**: Zod 4.x
-
-### Observability
-
-- **Logging**: Winston
-- **Metrics**: Prometheus (prom-client, express-prom-bundle)
-- **Tracing**: OpenTelemetry SDK
-
-### Security
-
-- **Security Headers**: Helmet
-- **CORS**: cors middleware
-
-### Testing
-
-- **Test Framework**: Jest
-- **HTTP Testing**: Supertest
-- **Coverage**: Jest coverage
-
-### DevOps
-
-- **Containerization**: Docker
-- **Orchestration**: Kubernetes
-- **CI/CD**: GitHub Actions
-
-### Development Tools
-
-- **Code Quality**: ESLint, Prettier
-- **Git Hooks**: Husky
-- **Process Manager**: nodemon (dev)
 
 ## Architecture
 
@@ -177,6 +63,258 @@ This Todo Backend API is designed as a reference implementation showcasing produ
 │               │  │                │  │   Grafana,    │
 │               │  │                │  │   OpenTelemetry)│
 └───────────────┘  └───────────────┘  └───────────────┘
+```
+
+## Getting Started
+
+### Prerequisites
+
+- Node.js 20.x or higher
+- PostgreSQL 15.x or higher
+- Redis (Upstash account or local Redis instance)
+- Docker & Docker Compose (optional, for containerized setup)
+- Kubernetes cluster (optional, for K8s deployment)
+
+### Environment Variables
+
+Create a `.env` file in the root directory:
+
+```env
+# Server
+NODE_ENV=development
+PORT=3000
+
+# Database
+DATABASE_URL=postgresql://user:password@localhost:5432/todo_db
+DIRECT_URL=postgresql://user:password@localhost:5432/todo_db
+
+# JWT
+JWT_SECRET=your-super-secret-jwt-key-must-be-at-least-32-characters-long
+JWT_EXPIRES_IN=1h
+
+# Redis (Upstash)
+UPSTASH_REDIS_URL=https://your-redis-instance.upstash.io
+UPSTASH_REDIS_TOKEN=your-redis-token
+
+# OpenTelemetry (optional)
+OTEL_EXPORTER_OTLP_ENDPOINT=http://localhost:4318/v1/traces
+OTEL_SERVICE_NAME=todo-backend
+
+# Test Environment
+TEST_USER_ID=test-user-id-for-testing
+
+# CORS
+CORS_ORIGIN=*
+
+# Rate Limiting
+RATE_LIMIT_WINDOW_MS=60000
+RATE_LIMIT_MAX_REQUESTS=30
+```
+
+### Installation
+
+1. **Clone the repository**
+
+```bash
+git clone <repository-url>
+cd production-ready-backend-template
+```
+
+2. **Install dependencies**
+
+```bash
+npm install
+```
+
+3. **Set up the database**
+
+```bash
+# Generate Prisma Client
+npx prisma generate
+
+# Run migrations
+npx prisma migrate deploy
+
+# (Optional) Seed database
+npx prisma db seed
+```
+
+4. **Start the development server**
+
+```bash
+npm run dev
+```
+
+The server will start on `http://localhost:3000`
+
+## Development
+
+### Available Scripts
+
+```bash
+# Development
+npm run dev          # Start development server with nodemon
+npm run build        # Build TypeScript to JavaScript
+npm start            # Start production server
+
+# Testing
+npm test             # Run all tests
+npm run test:watch   # Run tests in watch mode
+npm run test:coverage # Run tests with coverage report
+
+# Code Quality
+npm run lint         # Run ESLint
+npm run lint:fix     # Fix ESLint errors
+npm run format       # Check code formatting
+npm run format:fix   # Fix code formatting
+```
+
+### Development Workflow
+
+1. **Create a feature branch**
+
+```bash
+git checkout -b feature/your-feature-name
+```
+
+2. **Make your changes**
+   - Follow TypeScript best practices
+   - Write tests for new features
+   - Update documentation as needed
+
+3. **Run quality checks**
+
+```bash
+npm run lint
+npm run format
+npm test
+```
+
+4. **Commit your changes**
+
+```bash
+git add .
+git commit -m "feat: add new feature"
+```
+
+5. **Push and create PR**
+
+```bash
+git push origin feature/your-feature-name
+```
+
+### Code Style
+
+- **TypeScript**: Strict mode enabled
+- **Linting**: ESLint with TypeScript rules
+- **Formatting**: Prettier
+- **Git Hooks**: Husky pre-commit hooks
+
+## Testing
+
+### Running Tests
+
+```bash
+# Run all tests
+npm test
+
+# Run with coverage
+npm run test:coverage
+
+# Run in watch mode
+npm run test:watch
+```
+
+### Test Environment
+
+Tests use a separate test database and mock external services:
+
+- Redis is mocked
+- Authentication is bypassed with `TEST_USER_ID`
+- Rate limiting is disabled
+
+##Docker Deployment
+
+### Build Image
+
+```bash
+docker build -f docker/Dockerfile -t todo-backend:latest .
+```
+
+### Run Container
+
+```bash
+docker run -p 3000:3000 \
+  -e DATABASE_URL=postgresql://user:pass@host:5432/db \
+  -e JWT_SECRET=your-secret \
+  todo-backend:latest
+```
+
+### Docker Compose
+
+```bash
+# Start application with dependencies
+docker-compose -f docker/docker-compose.yaml up -d
+
+# View logs
+docker-compose -f docker/docker-compose.yaml logs -f backend
+
+# Stop services
+docker-compose -f docker/docker-compose.yaml down
+```
+
+## Kubernetes Deployment
+
+### Prerequisites
+
+- Kubernetes cluster (v1.24+)
+- kubectl configured
+- PostgreSQL and Redis accessible from cluster
+
+### Deploy
+
+1. **Create namespace**
+
+```bash
+kubectl create namespace todo-backend
+```
+
+2. **Create secrets**
+
+```bash
+kubectl create secret generic todo-backend-secrets \
+  --from-literal=DATABASE_URL=postgresql://... \
+  --from-literal=JWT_SECRET=... \
+  --from-literal=UPSTASH_REDIS_URL=... \
+  --from-literal=UPSTASH_REDIS_TOKEN=... \
+  -n todo-backend
+```
+
+3. **Apply configurations**
+
+```bash
+kubectl apply -f k8s/configmap.yaml
+kubectl apply -f k8s/secret.yaml
+kubectl apply -f k8s/deployment.yaml
+kubectl apply -f k8s/service.yaml
+kubectl apply -f k8s/ingress.yaml
+kubectl apply -f k8s/hpa.yaml
+```
+
+### Verify Deployment
+
+```bash
+# Check pods
+kubectl get pods -n todo-backend
+
+# Check services
+kubectl get svc -n todo-backend
+
+# Check ingress
+kubectl get ingress -n todo-backend
+
+# View logs
+kubectl logs -f deployment/todo-backend -n todo-backend
 ```
 
 ## API Documentation
@@ -440,258 +578,6 @@ Rate limits are applied per IP address and per authenticated user:
   - `X-RateLimit-Limit`: Maximum requests allowed
   - `X-RateLimit-Remaining`: Remaining requests
   - `X-RateLimit-Reset`: Reset timestamp
-
-## Getting Started
-
-### Prerequisites
-
-- Node.js 20.x or higher
-- PostgreSQL 15.x or higher
-- Redis (Upstash account or local Redis instance)
-- Docker & Docker Compose (optional, for containerized setup)
-- Kubernetes cluster (optional, for K8s deployment)
-
-### Environment Variables
-
-Create a `.env` file in the root directory:
-
-```env
-# Server
-NODE_ENV=development
-PORT=3000
-
-# Database
-DATABASE_URL=postgresql://user:password@localhost:5432/todo_db
-DIRECT_URL=postgresql://user:password@localhost:5432/todo_db
-
-# JWT
-JWT_SECRET=your-super-secret-jwt-key-must-be-at-least-32-characters-long
-JWT_EXPIRES_IN=1h
-
-# Redis (Upstash)
-UPSTASH_REDIS_URL=https://your-redis-instance.upstash.io
-UPSTASH_REDIS_TOKEN=your-redis-token
-
-# OpenTelemetry (optional)
-OTEL_EXPORTER_OTLP_ENDPOINT=http://localhost:4318/v1/traces
-OTEL_SERVICE_NAME=todo-backend
-
-# Test Environment
-TEST_USER_ID=test-user-id-for-testing
-
-# CORS
-CORS_ORIGIN=*
-
-# Rate Limiting
-RATE_LIMIT_WINDOW_MS=60000
-RATE_LIMIT_MAX_REQUESTS=30
-```
-
-### Installation
-
-1. **Clone the repository**
-
-```bash
-git clone <repository-url>
-cd production-ready-backend-template
-```
-
-2. **Install dependencies**
-
-```bash
-npm install
-```
-
-3. **Set up the database**
-
-```bash
-# Generate Prisma Client
-npx prisma generate
-
-# Run migrations
-npx prisma migrate deploy
-
-# (Optional) Seed database
-npx prisma db seed
-```
-
-4. **Start the development server**
-
-```bash
-npm run dev
-```
-
-The server will start on `http://localhost:3000`
-
-## Development
-
-### Available Scripts
-
-```bash
-# Development
-npm run dev          # Start development server with nodemon
-npm run build        # Build TypeScript to JavaScript
-npm start            # Start production server
-
-# Testing
-npm test             # Run all tests
-npm run test:watch   # Run tests in watch mode
-npm run test:coverage # Run tests with coverage report
-
-# Code Quality
-npm run lint         # Run ESLint
-npm run lint:fix     # Fix ESLint errors
-npm run format       # Check code formatting
-npm run format:fix   # Fix code formatting
-```
-
-### Development Workflow
-
-1. **Create a feature branch**
-
-```bash
-git checkout -b feature/your-feature-name
-```
-
-2. **Make your changes**
-   - Follow TypeScript best practices
-   - Write tests for new features
-   - Update documentation as needed
-
-3. **Run quality checks**
-
-```bash
-npm run lint
-npm run format
-npm test
-```
-
-4. **Commit your changes**
-
-```bash
-git add .
-git commit -m "feat: add new feature"
-```
-
-5. **Push and create PR**
-
-```bash
-git push origin feature/your-feature-name
-```
-
-### Code Style
-
-- **TypeScript**: Strict mode enabled
-- **Linting**: ESLint with TypeScript rules
-- **Formatting**: Prettier
-- **Git Hooks**: Husky pre-commit hooks
-
-## Testing
-
-### Running Tests
-
-```bash
-# Run all tests
-npm test
-
-# Run with coverage
-npm run test:coverage
-
-# Run in watch mode
-npm run test:watch
-```
-
-### Test Environment
-
-Tests use a separate test database and mock external services:
-
-- Redis is mocked
-- Authentication is bypassed with `TEST_USER_ID`
-- Rate limiting is disabled
-
-##Docker Deployment
-
-### Build Image
-
-```bash
-docker build -f docker/Dockerfile -t todo-backend:latest .
-```
-
-### Run Container
-
-```bash
-docker run -p 3000:3000 \
-  -e DATABASE_URL=postgresql://user:pass@host:5432/db \
-  -e JWT_SECRET=your-secret \
-  todo-backend:latest
-```
-
-### Docker Compose
-
-```bash
-# Start application with dependencies
-docker-compose -f docker/docker-compose.yaml up -d
-
-# View logs
-docker-compose -f docker/docker-compose.yaml logs -f backend
-
-# Stop services
-docker-compose -f docker/docker-compose.yaml down
-```
-
-## Kubernetes Deployment
-
-### Prerequisites
-
-- Kubernetes cluster (v1.24+)
-- kubectl configured
-- PostgreSQL and Redis accessible from cluster
-
-### Deploy
-
-1. **Create namespace**
-
-```bash
-kubectl create namespace todo-backend
-```
-
-2. **Create secrets**
-
-```bash
-kubectl create secret generic todo-backend-secrets \
-  --from-literal=DATABASE_URL=postgresql://... \
-  --from-literal=JWT_SECRET=... \
-  --from-literal=UPSTASH_REDIS_URL=... \
-  --from-literal=UPSTASH_REDIS_TOKEN=... \
-  -n todo-backend
-```
-
-3. **Apply configurations**
-
-```bash
-kubectl apply -f k8s/configmap.yaml
-kubectl apply -f k8s/secret.yaml
-kubectl apply -f k8s/deployment.yaml
-kubectl apply -f k8s/service.yaml
-kubectl apply -f k8s/ingress.yaml
-kubectl apply -f k8s/hpa.yaml
-```
-
-### Verify Deployment
-
-```bash
-# Check pods
-kubectl get pods -n todo-backend
-
-# Check services
-kubectl get svc -n todo-backend
-
-# Check ingress
-kubectl get ingress -n todo-backend
-
-# View logs
-kubectl logs -f deployment/todo-backend -n todo-backend
-```
 
 ### Horizontal Pod Autoscaling
 
