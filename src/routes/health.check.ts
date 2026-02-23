@@ -40,7 +40,7 @@ router.get('/database', async (_req: Request, res: Response) => {
 });
 
 /**
- * Simple liveness probe
+ * liveness probe
  */
 router.get('/live', (_req: Request, res: Response) => {
   res.status(200).json({
@@ -50,7 +50,7 @@ router.get('/live', (_req: Request, res: Response) => {
 });
 
 /**
- * Simple readiness probe
+ * readiness probe
  */
 router.get('/ready', async (_req: Request, res: Response) => {
   try {

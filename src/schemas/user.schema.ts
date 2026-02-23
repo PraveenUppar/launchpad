@@ -17,11 +17,7 @@ const passwordSchema = z
 
 export const signupSchema = z.object({
   body: z.object({
-    email: z
-      .string({ message: 'Email is required' })
-      .email({ message: 'Invalid email format' })
-      .toLowerCase()
-      .trim(),
+    email: z.email({ message: 'Email is required' }).toLowerCase().trim(),
     password: passwordSchema,
   }),
 });

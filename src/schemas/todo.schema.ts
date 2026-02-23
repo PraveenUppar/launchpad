@@ -13,7 +13,7 @@ export const createTodoSchema = z.object({
 
 export const updateTodoSchema = z.object({
   params: z.object({
-    id: z.string().uuid('Invalid todo ID format'),
+    id: z.uuid('Invalid todo ID format'),
   }),
   body: z.object({
     title: z
