@@ -1,10 +1,8 @@
-# Production-Ready Todo Backend API
+# Launchpad
 
-A production grade RESTful API for managing todos, built with modern backend engineering principles. This project demonstrates industry-standard practices for building scalable, observable, and maintainable backend services.
+A production RESTful API backend, built with modern backend engineering principles. This project demonstrates industry-standard practices for building scalable, observable, and maintainable backend services.
 
 ## Overview
-
-This Todo Backend API is designed as a reference implementation showcasing production-ready backend development practices. It includes:
 
 - **RESTful API** with proper HTTP semantics
 - **Authentication & Authorization** using JWT
@@ -67,14 +65,6 @@ This Todo Backend API is designed as a reference implementation showcasing produ
 
 ## Getting Started
 
-### Prerequisites
-
-- Node.js 20.x or higher
-- PostgreSQL 15.x or higher
-- Redis (Upstash account or local Redis instance)
-- Docker & Docker Compose (optional, for containerized setup)
-- Kubernetes cluster (optional, for K8s deployment)
-
 ### Environment Variables
 
 Create a `.env` file in the root directory:
@@ -102,9 +92,6 @@ OTEL_SERVICE_NAME=todo-backend
 
 # Test Environment
 TEST_USER_ID=test-user-id-for-testing
-
-# CORS
-CORS_ORIGIN=*
 
 # Rate Limiting
 RATE_LIMIT_WINDOW_MS=60000
@@ -169,47 +156,6 @@ npm run format       # Check code formatting
 npm run format:fix   # Fix code formatting
 ```
 
-### Development Workflow
-
-1. **Create a feature branch**
-
-```bash
-git checkout -b feature/your-feature-name
-```
-
-2. **Make your changes**
-   - Follow TypeScript best practices
-   - Write tests for new features
-   - Update documentation as needed
-
-3. **Run quality checks**
-
-```bash
-npm run lint
-npm run format
-npm test
-```
-
-4. **Commit your changes**
-
-```bash
-git add .
-git commit -m "feat: add new feature"
-```
-
-5. **Push and create PR**
-
-```bash
-git push origin feature/your-feature-name
-```
-
-### Code Style
-
-- **TypeScript**: Strict mode enabled
-- **Linting**: ESLint with TypeScript rules
-- **Formatting**: Prettier
-- **Git Hooks**: Husky pre-commit hooks
-
 ## Testing
 
 ### Running Tests
@@ -225,15 +171,7 @@ npm run test:coverage
 npm run test:watch
 ```
 
-### Test Environment
-
-Tests use a separate test database and mock external services:
-
-- Redis is mocked
-- Authentication is bypassed with `TEST_USER_ID`
-- Rate limiting is disabled
-
-##Docker Deployment
+## Docker Deployment
 
 ### Build Image
 
